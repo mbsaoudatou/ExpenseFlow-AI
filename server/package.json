@@ -1,9 +1,9 @@
 {
   "name": "server",
   "version": "1.0.0",
-"engines": {
-  "node": "20.x"
-},
+  "engines": {
+    "node": "20.x"
+  },
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -14,8 +14,8 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "better-sqlite3": "^12.11.1",
     "cors": "^2.8.6",
-    "express": "^5.2.1",
-    "sqlite3": "^6.0.1"
+    "express": "^5.2.1"
   }
 }
