@@ -23,7 +23,7 @@ const [notes, setNotes] = useState("");
 const [editingId, setEditingId] = useState(null);
 
 function loadDashboard() {
-  fetch("http://localhost:5000/dashboard")
+  fetch("https://expenseflow-ai.onrender.com/dashboard")
     .then((res) => res.json())
     .then((data) => {
       setTotalExpenses(data.totalExpenses);
@@ -33,7 +33,7 @@ function loadDashboard() {
 }
 
 function loadCategorySummary() {
-  fetch("http://localhost:5000/category-summary")
+fetch("https://expenseflow-ai.onrender.com/category-summary")
     .then((res) => res.json())
     .then((data) => {
       setCategorySummary(data);
@@ -41,7 +41,7 @@ function loadCategorySummary() {
     .catch((err) => console.log(err));
 }
 function loadMonthlyReport() {
-  fetch("http://localhost:5000/monthly-report")
+ fetch("https://expenseflow-ai.onrender.com/monthly-report")
     .then((res) => res.json())
     .then((data) => {
       setMonthlyReport(data);
@@ -50,7 +50,7 @@ function loadMonthlyReport() {
 }
 
 function loadExpenses() {
-  fetch("http://localhost:5000/expenses")
+ fetch("https://expenseflow-ai.onrender.com/expenses")
     .then((res) => res.json())
     .then((data) => {
       setExpenses(data);
@@ -59,7 +59,7 @@ function loadExpenses() {
 }
 
 function deleteExpense(id) {
-  fetch(`http://localhost:5000/expenses/${id}`, {
+  fetch(`https://expenseflow-ai.onrender.com/expenses/${id}`, {
     method: "DELETE",
   })
     .then((res) => res.json())
@@ -134,7 +134,7 @@ function saveExpense() {
 
   if (editingId) {
 
-    fetch(`http://localhost:5000/expenses/${editingId}`, {
+    fetch(`https://expenseflow-ai.onrender.com/expenses/${editingId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -156,7 +156,7 @@ function saveExpense() {
 
   } else {
 
-    fetch("http://localhost:5000/expenses", {
+    fetch("https://expenseflow-ai.onrender.com/expenses", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -180,7 +180,7 @@ function saveExpense() {
 
 
 function loadDashboard() {
-  fetch("http://localhost:5000/dashboard")
+ fetch("https://expenseflow-ai.onrender.com/dashboard")
     .then((res) => res.json())
     .then((data) => {
       setTotalExpenses(data.totalExpenses);
