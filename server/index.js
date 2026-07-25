@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const Database = require("better-sqlite3");
+const path = require("path");
 
 const app = express();
 
@@ -8,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 // Database
-const db = new Database("./expenses.db");
+const db = new Database(path.join(__dirname, "expenses.db"));
 
 // Create table
 db.exec(`
