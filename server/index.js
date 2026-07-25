@@ -107,6 +107,7 @@ app.get("/dashboard", (req, res) => {
         COUNT(*) AS totalTransactions
       FROM expenses
     `).get();
+console.log("Dashboard data:", row);
 
     res.json({
       totalExpenses: row.totalExpenses || 0,
