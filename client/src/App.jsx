@@ -26,12 +26,13 @@ function loadDashboard() {
   fetch("https://expenseflow-ai.onrender.com/dashboard")
     .then((res) => res.json())
     .then((data) => {
+      console.log("Dashboard response:", data);
+
       setTotalExpenses(data.totalExpenses);
       setTotalTransactions(data.totalTransactions);
     })
     .catch((err) => console.log(err));
 }
-
 function loadCategorySummary() {
 fetch("https://expenseflow-ai.onrender.com/category-summary")
     .then((res) => res.json())
