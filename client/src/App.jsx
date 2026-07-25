@@ -179,14 +179,6 @@ function saveExpense() {
 }
 
 
-function loadDashboard() {
- fetch("https://expenseflow-ai.onrender.com/dashboard")
-    .then((res) => res.json())
-    .then((data) => {
-      setTotalExpenses(data.totalExpenses);
-    })
-    .catch((err) => console.log(err));
-}
 useEffect(() => {
   loadDashboard();
   loadExpenses();
@@ -243,15 +235,37 @@ return (
         }}
       >
         <h3>Total Expenses</h3>
+<div
+  style={{
+    background: "white",
+    padding: "20px",
+    borderRadius: "15px",
+    boxShadow: "0 4px 15px rgba(0,0,0,0.1)",
+  }}
+>
+  <h3>Total Expenses</h3>
 
-        <h1 style={{ color: "#1976d2" }}>
-          ${totalExpenses.toLocaleString()}
-        </h1>
-      </div>
+  <h1 style={{ color: "#1976d2" }}>
+    ${totalExpenses.toLocaleString()}
+  </h1>
+</div>
 
-<p style={{ color: "#555" }}>
-  Test: {totalTransactions}
-</p>
+
+<div
+  style={{
+    background: "white",
+    padding: "20px",
+    borderRadius: "15px",
+    boxShadow: "0 4px 15px rgba(0,0,0,0.1)",
+  }}
+>
+  <h3>Total Transactions</h3>
+
+  <h1 style={{ color: "#2e7d32" }}>
+    {totalTransactions}
+  </h1>
+</div>
+        
 
 <h2 style={{ marginTop: "30px" }}>
   Category Summary
