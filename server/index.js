@@ -61,6 +61,12 @@ app.get("/expenses", (req, res) => {
   }
 });
 
+// Debug database
+app.get("/debug-expenses", (req, res) => {
+  const rows = db.prepare("SELECT * FROM expenses").all();
+  res.json(rows);
+});
+
 // Delete expense
 app.delete("/expenses/:id", (req, res) => {
   try {
