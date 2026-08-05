@@ -66,6 +66,46 @@ app.get("/debug-expenses", (req, res) => {
   const rows = db.prepare("SELECT * FROM expenses").all();
   res.json(rows);
 });
+// Export database data
+app.get("/export-expenses", (req, res) => {
+  const rows = db.prepare("SELECT * FROM expenses").all();
+  res.json(rows);
+});
+
+// Import expenses to Render database
+app.post("/import-expenses", (req, res) => {
+  try {
+    const expenses = req.body;
+
+    const stmt = db.prepare(`
+      INSERT INTO expenses 
+      (id, amount, category, vendor, date, notes)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `);
+
+    const insertMany = db.transaction((items) => {
+      for (const expense of items) {
+        stmt.run(
+          expense.id,
+          expense.amount,
+          expense.category,
+          expense.vendor,
+          expense.date,
+          expense.notes
+        );
+      }
+    });
+
+    insertMany(expenses);
+
+    res.json({
+      imported: expenses.length
+    });
+
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 // Delete expense
 app.delete("/expenses/:id", (req, res) => {
