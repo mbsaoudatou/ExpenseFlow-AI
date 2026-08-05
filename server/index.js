@@ -161,6 +161,55 @@ app.get("/monthly-report", (req, res) => {
   }
 });
 
+// Export database data
+app.get("/export-expenses", (req, res) => {
+  try {
+    const rows = db.prepare("SELECT * FROM expenses").all();
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// Import database data
+app.post("/import-expenses", (req, res) => {
+  try {
+    const expenses = req.body;
+
+    const insert = db.prepare(`
+      INSERT INTO expenses
+      (amount, category, vendor, date, notes)
+      VALUES (?, ?, ?, ?, ?)
+    `);
+
+    const clear = db.prepare("DELETE FROM expenses");
+
+    const transaction = db.transaction(() => {
+      clear.run();
+
+      for (const expense of expenses) {
+        insert.run(
+          expense.amount,
+          expense.category,
+          expense.vendor,
+          expense.date,
+          expense.notes
+        );
+      }
+    });
+
+    transaction();
+
+    res.json({
+      success: true,
+      imported: expenses.length
+    });
+
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // Start server
 app.listen(5000, () => {
   console.log("Server running on port 5000");
