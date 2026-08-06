@@ -210,6 +210,46 @@ app.post("/import-expenses", (req, res) => {
   }
 });
 
+// Analytics Dashboard
+app.get("/analytics", (req, res) => {
+  try {
+    const average = db.prepare(`
+      SELECT AVG(amount) AS averageExpense
+      FROM expenses
+    `).get();
+
+    const largest = db.prepare(`
+      SELECT *
+      FROM expenses
+      ORDER BY amount DESC
+      LIMIT 1
+    `).get();
+
+    const monthly = db.prepare(`
+      SELECT SUM(amount) AS monthlyTotal
+      FROM expenses
+      WHERE strftime('%Y-%m', date) = strftime('%Y-%m','now')
+    `).get();
+
+    const recent = db.prepare(`
+      SELECT *
+      FROM expenses
+      ORDER BY id DESC
+      LIMIT 5
+    `).all();
+
+    res.json({
+      averageExpense: average.averageExpense || 0,
+      largestExpense: largest || null,
+      monthlyTotal: monthly.monthlyTotal || 0,
+      recentTransactions: recent
+    });
+
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // Start server
 app.listen(5000, () => {
   console.log("Server running on port 5000");
